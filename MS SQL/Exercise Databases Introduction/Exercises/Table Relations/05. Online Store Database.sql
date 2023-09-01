@@ -1,0 +1,72 @@
+CREATE TABLE Orders
+(
+    OrderID INT NOT NULL,
+    CustomerID INT NOT NULL,    
+);
+CREATE TABLE Customers
+(
+    CustomerID INT NOT NULL,
+    Name NVARCHAR(50), 
+    Birthday DATETIME,
+    CityID INT NOT NULL
+);
+CREATE TABLE Cities
+(
+    CityID INT NOT NULL,
+    Name NVARCHAR(50)
+);
+
+CREATE TABLE OrderItems
+(
+    OrderID INT NOT NULL,
+    ItemID INT NOT NULL,
+);
+
+CREATE TABLE Items
+(
+    ItemID INT NOT NULL,
+    Name NVARCHAR(50),
+    ItemTypeID INT NOT NULL,
+);
+CREATE TABLE ItemTypes
+(
+    ItemTypeID INT NOT NULL,
+    Name NVARCHAR(50)
+);
+
+ALTER TABLE Orders
+ADD PRIMARY KEY (OrderID)
+
+ALTER TABLE Customers
+ADD PRIMARY KEY (CustomerID)
+
+ALTER TABLE Orders
+ADD FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+
+ALTER TABLE Cities
+ADD PRIMARY KEY (CityID)
+
+ALTER TABLE Customers
+ADD FOREIGN KEY (CityID) REFERENCES Cities(CityID)
+
+ALTER TABLE Items
+ADD PRIMARY KEY (ItemID)
+
+ALTER TABLE ItemTypes
+ADD PRIMARY KEY (ItemTypeID)
+
+ALTER TABLE Items
+ADD FOREIGN KEY (ItemTypeID) REFERENCES ItemTypes(ItemTypeID)
+
+ALTER TABLE OrderItems
+ADD PRIMARY KEY (OrderID, ItemID)
+
+ALTER TABLE OrderItems
+ADD FOREIGN KEY (OrderID)REFERENCES Orders(OrderID)
+
+ALTER TABLE OrderItems
+ADD FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+
+
+
+
