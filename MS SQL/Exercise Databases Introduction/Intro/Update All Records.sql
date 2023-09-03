@@ -1,1 +1,0 @@
-SELECT Name, Age FROM Minions Order By Name ASC
