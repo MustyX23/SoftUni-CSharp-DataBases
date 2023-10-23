@@ -1,4 +1,5 @@
 ﻿using SoftUni.Data;
+using SoftUni.Models;
 using System.Linq;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace SoftUni
         {
             SoftUniContext context = new SoftUniContext();
 
-            string result = GetEmployeesFromResearchAndDevelopment(context);
+            string result = GetAddressesByTown(context);
 
             Console.WriteLine(result);
         }
@@ -78,6 +79,34 @@ namespace SoftUni
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        public static string GetAddressesByTown(SoftUniContext context) 
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var addresses = context.Addresses                
+                .Select
+                (a => new 
+                {
+                    Address = a.AddressText,
+                    Employees = a.Employees.Count,
+                    TownName = a.Town.Name
+
+                })
+                .OrderByDescending(a => a.Employees)
+                .ThenBy(a => a.TownName)
+                .ThenBy(a => a.Address)
+                .Take(10)
+                .ToList();
+
+            foreach (var address in addresses)
+            {
+                sb.AppendLine($"{address.Address}, {address.TownName} - {address.Employees} employees");
+            }
+
+            return sb.ToString().TrimEnd();
+
         }
 
 
