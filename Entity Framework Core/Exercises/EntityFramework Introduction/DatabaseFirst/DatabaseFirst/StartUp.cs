@@ -212,7 +212,6 @@ namespace SoftUni
             }
             return sb.ToString().TrimEnd();
         }
-
         public static string GetDepartmentsWithMoreThan5Employees(SoftUniContext context) 
         {
             StringBuilder sb = new StringBuilder();
@@ -251,7 +250,6 @@ namespace SoftUni
             }
             return sb.ToString().TrimEnd();
         }
-
         public static string GetLatestProjects(SoftUniContext context) 
         {
             StringBuilder sb = new StringBuilder();
@@ -278,7 +276,6 @@ namespace SoftUni
             return sb.ToString().TrimEnd();
 
         }
-
         public static string IncreaseSalaries(SoftUniContext context)
         {
             StringBuilder sb = new StringBuilder();
@@ -301,7 +298,6 @@ namespace SoftUni
             }
             return sb.ToString().TrimEnd();
         }
-
         public static string GetEmployeesByFirstNameStartingWithSa(SoftUniContext context)
         {
             StringBuilder sb = new StringBuilder();
@@ -321,7 +317,6 @@ namespace SoftUni
 
             return sb.ToString().TrimEnd();
         }
-
         public static string DeleteProjectById(SoftUniContext context) 
         {
             var sb = new StringBuilder();
