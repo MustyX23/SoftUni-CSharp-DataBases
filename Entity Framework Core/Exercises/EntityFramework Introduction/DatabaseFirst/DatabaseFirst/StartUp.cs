@@ -11,11 +11,7 @@ namespace SoftUni
         {
             SoftUniContext context = new SoftUniContext();
 
-<<<<<<< Updated upstream
-            string result = GetAddressesByTown(context);
-=======
-            string result = GetEmployeesInPeriod(context);
->>>>>>> Stashed changes
+            string result = GetDepartmentsWithMoreThan5Employees(context);
 
             Console.WriteLine(result);
         }
@@ -119,7 +115,6 @@ namespace SoftUni
             return sb.ToString().TrimEnd();
                 
         }
-
         public static string GetEmployeesInPeriod(SoftUniContext context) 
         {
             StringBuilder sb = new StringBuilder();
@@ -159,7 +154,6 @@ namespace SoftUni
             return sb.ToString().TrimEnd();
             
         }
-
         public static string GetAddressesByTown(SoftUniContext context) 
         {
             StringBuilder sb = new StringBuilder();
@@ -186,6 +180,75 @@ namespace SoftUni
 
             return sb.ToString().TrimEnd();
 
+        }
+        public static string GetEmployee147(SoftUniContext context) 
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var employee147 = context.Employees
+                .Select(e => new {
+                    e.EmployeeId,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    JobTitle = e.JobTitle,
+                    EmployeesProjects = e.EmployeesProjects
+                    .Select(ep => new {ProjectName = ep.Project.Name})
+                    .OrderBy(ep => ep.ProjectName)
+                    .ToArray()
+                })
+                .FirstOrDefault(e => e.EmployeeId == 147);
+
+            //var projects = context.Projects
+            //    .Where(p => p.EmployeesProjects.Any(p => p.EmployeeId == employee147.EmployeeId))
+            //    .Select(p => new {ProjectName = p.Name })
+            //    .OrderBy(ep => ep.ProjectName);
+
+            sb.AppendLine($"{employee147.FirstName} {employee147.LastName} - {employee147.JobTitle}");
+
+            foreach (var project in employee147.EmployeesProjects)
+            {
+                sb.AppendLine(project.ProjectName);
+            }
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetDepartmentsWithMoreThan5Employees(SoftUniContext context) 
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var departments = context.Departments
+                .Select(d => new
+                {
+                    DepartmentName = d.Name,
+                    ManagerFirstName = d.Manager.FirstName,
+                    ManagerLastName = d.Manager.LastName,
+                    EmployeesCount = d.Employees.Count(),
+                    Employees = d.Employees.Select(e => new
+                    {
+                        EmployeeFirstName = e.FirstName,
+                        EmployeeLastName = e.LastName,
+                        EmployeeJobTitle = e.JobTitle,
+                    })
+                    .OrderBy(e => e.EmployeeFirstName)
+                    .ThenBy(e => e.EmployeeLastName)
+                    .ToArray()
+                })
+                .Where(d => d.EmployeesCount > 5)
+                .OrderBy(d => d.EmployeesCount)
+                .ThenBy(d => d.DepartmentName)
+                .ToArray();
+
+
+            foreach (var department in departments)
+            {
+                sb.AppendLine($"{department.DepartmentName} - {department.ManagerFirstName} {department.ManagerLastName}");
+
+                foreach (var employee in department.Employees)
+                {
+                    sb.AppendLine($"{employee.EmployeeFirstName} {employee.EmployeeLastName} - {employee.EmployeeJobTitle}");
+                }
+            }
+            return sb.ToString().TrimEnd();
         }
 
 
