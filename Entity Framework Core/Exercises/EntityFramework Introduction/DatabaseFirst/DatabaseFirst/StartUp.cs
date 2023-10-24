@@ -11,7 +11,11 @@ namespace SoftUni
         {
             SoftUniContext context = new SoftUniContext();
 
+<<<<<<< Updated upstream
             string result = GetAddressesByTown(context);
+=======
+            string result = GetEmployeesInPeriod(context);
+>>>>>>> Stashed changes
 
             Console.WriteLine(result);
         }
@@ -26,7 +30,8 @@ namespace SoftUni
                     Name = e.FirstName + " " + e.LastName + " " + e.MiddleName,
                     JobInfo = e.JobTitle + " " + $"{e.Salary:f2}"
                 })
-                .OrderBy(e => e.EmployeeId);
+                .OrderBy(e => e.EmployeeId)
+                .ToList();
 
             foreach (var employee in employees)
             {
@@ -47,7 +52,8 @@ namespace SoftUni
                     e.FirstName,
                     FirstNameAndSalary = $"{e.FirstName} - {e.Salary:f2}"
                 })
-                .OrderBy(e => e.FirstName);
+                .OrderBy(e => e.FirstName)
+                .ToList();
 
             foreach (var employee in employees)
             {
@@ -71,7 +77,8 @@ namespace SoftUni
                     FormattedSalary = $"{e.Salary:f2}"
                 })
                 .OrderBy(e => e.Salary)
-                .ThenByDescending(e => e.FirstName);
+                .ThenByDescending(e => e.FirstName)
+                .ToList();
 
             foreach (var employee in employees)
             {
@@ -79,6 +86,78 @@ namespace SoftUni
             }
 
             return sb.ToString().TrimEnd();
+        }
+        public static string AddNewAddressToEmployee(SoftUniContext context) 
+        {
+            StringBuilder sb = new StringBuilder();            
+
+            var employee = context.Employees
+                .FirstOrDefault(e => e.LastName == "Nakov");
+
+            var address = new Address
+            {
+                AddressText = "Vitoshka 15",
+                TownId = 4
+            };
+
+            context.Addresses.Add(address);
+            employee.Address = address;
+            context.SaveChanges();
+
+
+            var employees = context.Employees
+                .OrderByDescending(e => e.AddressId)
+                .Select(e => new {AddressText = e.Address.AddressText })
+                .Take(10)
+                .ToList();
+
+            foreach (var userEmployee in employees)
+            {
+                sb.AppendLine(userEmployee.AddressText);
+            }
+
+            return sb.ToString().TrimEnd();
+                
+        }
+
+        public static string GetEmployeesInPeriod(SoftUniContext context) 
+        {
+            StringBuilder sb = new StringBuilder();
+            var employees = context.Employees
+                .Take(10)          
+                .Select(e => new
+                {
+                    Name = e.FirstName + " " + e.LastName,                   
+                    ManagerName= e.Manager.FirstName + " " + e.Manager.LastName,
+                    Projects = e.EmployeesProjects
+                    .Where(ep => ep.Project.StartDate.Year >= 2001 
+                    && ep.Project.StartDate.Year <= 2003)
+                    .Select(ep => new 
+                    {
+                        ProjectName = ep.Project.Name,
+                        StartingDate = ep.Project.StartDate.ToString("M/d/yyyy h:mm:ss tt"),
+                        EndingDate = ep.Project.EndDate != null 
+                        ? ep.Project.EndDate.Value.ToString("M/d/yyyy h:mm:ss tt")
+                        : "not finished"
+                    })
+
+
+                })
+                .ToList();
+
+            foreach (var employee in employees)
+            {
+                sb.AppendLine($"{employee.Name} - Manager: {employee.ManagerName}");   
+                
+                foreach (var project in employee.Projects) 
+                {
+                    sb.AppendLine($"--{project.ProjectName} - {project.StartingDate} - {project.EndingDate}");
+                }
+            }
+
+
+            return sb.ToString().TrimEnd();
+            
         }
 
         public static string GetAddressesByTown(SoftUniContext context) 

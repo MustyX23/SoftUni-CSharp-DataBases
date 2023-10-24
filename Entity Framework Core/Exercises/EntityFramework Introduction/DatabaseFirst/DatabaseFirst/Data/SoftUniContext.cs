@@ -20,7 +20,7 @@ public partial class SoftUniContext : DbContext
     public virtual DbSet<Project> Projects { get; set; } = null!;
     public virtual DbSet<Town> Towns { get; set; } = null!;
 
-    public virtual DbSet<EmployeeProject> EmployeeProjects { get; set; } = null!;
+    public virtual DbSet<EmployeeProject> EmployeesProjects { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

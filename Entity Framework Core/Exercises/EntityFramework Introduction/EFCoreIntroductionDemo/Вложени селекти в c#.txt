@@ -1,0 +1,51 @@
+-Когато имаме нужда от връзка много към много в база от данни
+-Employees
+-Projects
+-EmployeesProjects
+
+-Имаме нужда от вложени селекти, ако искаме да достъпим за пример всички проекти на employee-тата.
+(Едно employee може да има няколко проекта, както и няколко проекта може да имат няколко employeeta).
+
+var employees = context.Employees
+    .Take(10)          
+    .Select(e => new
+    {
+        Name = e.FirstName + " " + e.LastName,                   
+        ManagerName= e.Manager.FirstName + " " + e.Manager.LastName,
+        Projects = e.EmployeesProjects
+        .Where(ep => ep.Project.StartDate.Year >= 2001 
+        && ep.Project.StartDate.Year <= 2003)
+        .Select(ep => new 
+        {
+            ProjectName = ep.Project.Name,
+            StartingDate = ep.Project.StartDate.ToString("M/d/yyyy h:mm:ss tt"),
+            EndingDate = ep.Project.EndDate != null 
+            ? ep.Project.EndDate.Value.ToString("M/d/yyyy h:mm:ss tt")
+            : "not finished"
+        })
+
+
+    })
+    .ToList();
+
+Вторият select го правим, достъпвайки EmployeesProjects през Employees или Project
+(в случая искаме да достъпим Проектите => правим го така)
+ - e.EmployeesProjects.Where(ep => ep.Projects...)
+ - правим Select също от тази свързваща таблица много лесно
+.Select(ep => new
+{
+	ProjectName = ep.Project.Name
+})
+
+!!!
+Итерираме през свързаната таблица през два вложени цикъла:
+
+foreach (var employee in employees)
+{
+    sb.AppendLine($"{employee.Name} - Manager: {employee.ManagerName}");   
+    
+    foreach (var project in employee.Projects) 
+    {
+        sb.AppendLine($"--{project.ProjectName} - {project.StartingDate} - {project.EndingDate}");
+    }
+}
