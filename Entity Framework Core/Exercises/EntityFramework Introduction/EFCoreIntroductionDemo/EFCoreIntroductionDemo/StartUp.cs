@@ -1,28 +1,17 @@
-﻿using EFCoreIntroductionDemo.Data;
-using EFCoreIntroductionDemo.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using P01_StudentSystem.Data;
 
-public class StartUp
+namespace P01_StudentSystem
 {
-    private static void Main(string[] args)
+    public class StartUp
     {
-        var db = new SoftUniContext();
-
-        var employees = db.Employees
-            .Where(e => e.Salary > 50000)
-            .Include(e => e.Address)
-            .Select(e => new
-            {
-                Name = e.FirstName + " " + e.LastName,
-                AddressEmployee = e.Address
-            });
-
-        foreach (var employee in employees)
+        public static void Main()
         {
-            Console.WriteLine(employee.Name + " " + employee.AddressEmployee);
+            var context = new StudentSystemContext();
+
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
         }
-        
-
-
     }
+    
 }
