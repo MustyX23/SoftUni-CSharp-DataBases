@@ -105,7 +105,7 @@
 
             var bookCategories = context.BooksCategories
                 .Where(bc => categories.Contains(bc.Category.Name))
-                .Select(bc => new { BookTitle = bc.Book.Title })
+                .Select(bc => new { BookTitle = bc.Book.Title.ToLower()})
                 .OrderBy(b => b.BookTitle)
                 .ToArray();
 
