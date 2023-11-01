@@ -14,7 +14,9 @@
             var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            string result = GetBooksByPrice(db);
+            int year = int.Parse(Console.ReadLine());
+
+            string result = GetBooksNotReleasedIn(db, year);
 
             Console.WriteLine(result);
         }
@@ -67,6 +69,28 @@
             foreach (var book in books)
             {
                 sb.AppendLine($"{book.Title} - ${book.Price:f2}");
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetBooksNotReleasedIn(BookShopContext context, int year)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var books = context.Books
+                .Where(b => b.ReleaseDate.Value.Year != year)
+                .OrderBy(b => b.BookId)
+                .ToArray();
+            /*
+             *Return in a single string with all
+             *titles of books that are NOT released in a given year.
+             *Order them by bookId ascending.
+             */
+
+            foreach (var book in books)
+            {
+                sb.AppendLine(book.Title);
             }
 
             return sb.ToString().TrimEnd();
