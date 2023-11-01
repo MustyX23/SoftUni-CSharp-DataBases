@@ -6,6 +6,7 @@
     using System;
     using System.Text;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
 
     public class StartUp
     {
@@ -14,9 +15,9 @@
             var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            int year = int.Parse(Console.ReadLine());
+            string input = Console.ReadLine();
 
-            string result = GetBooksNotReleasedIn(db, year);
+            string result = GetBooksByCategory(db, input);
 
             Console.WriteLine(result);
         }
@@ -91,6 +92,36 @@
             foreach (var book in books)
             {
                 sb.AppendLine(book.Title);
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetBooksByCategory(BookShopContext context, string input)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string[] categories = input.ToLower().Split(' ');
+
+            var bookCategories = context.BooksCategories
+                .Where(bc => categories.Contains(bc.Category.Name))
+                .Select(bc => new { BookTitle = bc.Book.Title })
+                .OrderBy(b => b.BookTitle)
+                .ToArray();
+
+
+
+            /*
+              Return in a single string the titles of books by a given list of categories.
+              The list of categories will be given in a single line separated by one or more spaces. 
+              Ignore casing. 
+              Order by title alphabetically.
+             
+             */
+
+            foreach (var book in bookCategories)
+            {
+                sb.AppendLine(book.BookTitle);
             }
 
             return sb.ToString().TrimEnd();
