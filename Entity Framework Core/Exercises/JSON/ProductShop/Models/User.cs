@@ -1,8 +1,7 @@
-﻿namespace ProductShop.Models
-{
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace ProductShop.Models
+{
     public class User
     {
         public User()
@@ -10,7 +9,6 @@
             ProductsSold = new List<Product>();
             ProductsBought = new List<Product>();
         }
-
         public int Id { get; set; }
 
         public string? FirstName { get; set; }
