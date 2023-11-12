@@ -15,23 +15,28 @@ namespace CarDealer
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
-            string supplierInputJSON = File.ReadAllText(@"../../../Datasets/suppliers.json");
-            ImportSuppliers(db, supplierInputJSON);
+            ImportData(db);
 
-            string partsInputJSON = File.ReadAllText(@"../../../Datasets/parts.json");            
-            ImportParts(db, partsInputJSON);
+            //testing all the exports here:
+            Console.WriteLine(GetSalesWithAppliedDiscount(db));
+        }
+        public static void ImportData(CarDealerContext context)
+        {
+            string supplierInputJSON = File.ReadAllText(@"../../../Datasets/suppliers.json");
+            ImportSuppliers(context, supplierInputJSON);
+
+            string partsInputJSON = File.ReadAllText(@"../../../Datasets/parts.json");
+            ImportParts(context, partsInputJSON);
 
             string carsInputJSON = File.ReadAllText(@"../../../Datasets/cars.json");
-            ImportCars(db, carsInputJSON);
+            ImportCars(context, carsInputJSON);
 
             string customersInputJSON = File.ReadAllText(@"../../../Datasets/customers.json");
-            ImportCustomers(db, customersInputJSON);
+            ImportCustomers(context, customersInputJSON);
 
             string salesInputJSON = File.ReadAllText(@"../../../Datasets/sales.json");
-            ImportSales(db, salesInputJSON);
-
-            Console.WriteLine(GetCarsFromMakeToyota(db));
-        }
+            ImportSales(context, salesInputJSON);
+        } 
         public static string ImportSuppliers(CarDealerContext context, string inputJson)
         {
             var suppliers = JsonConvert.DeserializeObject<Supplier[]>(inputJson);
@@ -131,7 +136,7 @@ namespace CarDealer
                     Id = c.Id,
                     Make = c.Make,
                     Model = c.Model,
-                    TravelledDistance = c.TraveledDistance
+                    TraveledDistance = c.TraveledDistance
                 })
                 .ToArray();
 
