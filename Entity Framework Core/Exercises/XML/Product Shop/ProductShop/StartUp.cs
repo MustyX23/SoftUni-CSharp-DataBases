@@ -3,6 +3,7 @@ using ProductShop.DTOs.Export;
 using ProductShop.DTOs.Import;
 using ProductShop.Models;
 using System;
+using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Xml;
@@ -21,7 +22,7 @@ namespace ProductShop
 
             ImportData(db);
 
-            Console.WriteLine(GetCategoriesByProductsCount(db));
+            Console.WriteLine(GetUsersWithProducts(db));
         }
 
         public static void ImportData(ProductShopContext cotext)
@@ -152,40 +153,40 @@ namespace ProductShop
 
             return sb.ToString().TrimEnd();
         }
-        public static string GetSoldProducts(ProductShopContext context)
-        {
-            UserExportDTO[] users = context.Users
-                .Where(u => u.ProductsSold.Count >= 1)
-                .OrderBy(u => u.LastName)
-                .ThenBy(u => u.FirstName)
-                .Select(u => new UserExportDTO()
-                {
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    SoldProducts = u.ProductsSold.Select(p => new SoldProductExportDTO()
-                    {
-                        Name = p.Name,
-                        Price = p.Price
-                    })
-                    .ToArray()
-                })
-                .Take(5)
-                .ToArray();
+        //public static string GetSoldProducts(ProductShopContext context)
+        //{
+        //    UserExportDTO[] users = context.Users
+        //        .Where(u => u.ProductsSold.Count >= 1)
+        //        .OrderBy(u => u.LastName)
+        //        .ThenBy(u => u.FirstName)
+        //        .Select(u => new UserExportDTO()
+        //        {
+        //            FirstName = u.FirstName,
+        //            LastName = u.LastName,
+        //            SoldProducts = u.ProductsSold.Select(p => new SoldProductExportDTO()
+        //            {
+        //                Name = p.Name,
+        //                Price = p.Price
+        //            })
+        //            .ToArray()
+        //        })
+        //        .Take(5)
+        //        .ToArray();
 
-            var xmlSerializer = new XmlSerializer(typeof(UserExportDTO[]), new XmlRootAttribute("Users"));
+        //    var xmlSerializer = new XmlSerializer(typeof(UserExportDTO[]), new XmlRootAttribute("Users"));
 
-            XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
-            namespaces.Add(string.Empty, string.Empty);
+        //    XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+        //    namespaces.Add(string.Empty, string.Empty);
 
-            StringBuilder sb = new StringBuilder();
+        //    StringBuilder sb = new StringBuilder();
 
-            using StringWriter writer = new StringWriter(sb);
+        //    using StringWriter writer = new StringWriter(sb);
 
-            xmlSerializer.Serialize(writer, users, namespaces);
+        //    xmlSerializer.Serialize(writer, users, namespaces);
 
-            return sb.ToString().TrimEnd();
+        //    return sb.ToString().TrimEnd();
 
-        }
+        //}
 
         public static string GetCategoriesByProductsCount(ProductShopContext context)
         {
@@ -213,6 +214,42 @@ namespace ProductShop
 
             return sb.ToString().TrimEnd();
 
-        }        
+        }
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+            UserExportDTO[] users = context.Users
+                .ToArray()
+                .Where(u => u.ProductsSold.Count >= 1)
+                .OrderByDescending(u => u.ProductsSold.Count)
+                .Select(u => new UserExportDTO()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Age = u.Age,
+                    SoldProducts = new SoldProductContainer() 
+                    {
+                        Count = u.ProductsSold.Count,
+                        Products = u.ProductsSold.Select(ps => new SoldProductExportDTO()
+                        {
+                            Name = ps.Name,
+                            Price = ps.Price,
+                        })
+                        .OrderByDescending(ps => ps.Price).ToArray()
+                    }                   
+                })
+                .Take(10)
+                .ToArray();
+
+            XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+            namespaces.Add(string.Empty, string.Empty);
+
+            StringBuilder sb = new StringBuilder();
+            using StringWriter writer = new StringWriter(sb);
+
+            XmlSerializer serializer = new XmlSerializer(typeof(UserExportDTO[]), new XmlRootAttribute("Users"));
+            serializer.Serialize(writer, users);
+
+            return sb.ToString().TrimEnd();
+        }
     }
 }
