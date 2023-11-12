@@ -1,6 +1,7 @@
 ﻿namespace ProductShop.Models
 {
     using System.Collections.Generic;
+    using System.Xml.Serialization;
 
     public class User
     {
@@ -10,12 +11,10 @@
             this.ProductsBought = new List<Product>();
         }
 
-        public int Id { get; set; }
-
+        public int Id { get; set; }      
         public string FirstName { get; set; } = null!;
-
-        public string LastName { get; set; } = null!;
-
+        
+        public string LastName { get; set; } = null!;        
         public int? Age { get; set; }
 
         public ICollection<Product> ProductsSold { get; set; } = null!;
