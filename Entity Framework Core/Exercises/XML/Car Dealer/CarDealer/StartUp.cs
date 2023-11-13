@@ -5,6 +5,9 @@ using CarDealer.DTOs.Export;
 using CarDealer.DTOs.Import;
 using CarDealer.Models;
 using Castle.Core.Internal;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace CarDealer
 {
@@ -19,7 +22,7 @@ namespace CarDealer
 
             ImportData(db);
 
-            Console.WriteLine(GetCarsWithDistance(db));
+            Console.WriteLine(GetTotalSalesByCustomer(db));
         }
         private static IMapper InitializeAutoMapper()
         {
@@ -217,6 +220,66 @@ namespace CarDealer
                 .ToArray();
 
             return xmlHelper.Serialize<ExportCarDTO[]>(cars, "cars");
+        }
+        public static string GetCarsFromMakeBmw(CarDealerContext context)
+        {
+            XmlHelper xmlHelper = new XmlHelper();
+
+            IMapper mapper = InitializeAutoMapper();
+
+             ExportBMWCarDTO[] bmwCars = context.Cars
+                .Where(c => c.Make == "BMW")
+                .OrderBy (c => c.Model)
+                .ThenByDescending(c => c.TraveledDistance)
+                .ProjectTo<ExportBMWCarDTO>(mapper.ConfigurationProvider)
+                .ToArray();
+
+            return xmlHelper.Serialize<ExportBMWCarDTO[]>(bmwCars, "cars");
+        }
+        public static string GetLocalSuppliers(CarDealerContext context)
+        {
+            XmlHelper xmlHelper = new XmlHelper();
+
+            IMapper mapper = InitializeAutoMapper();
+
+            ExportLocalSuppliersDTO[] suppliers = context.Suppliers
+                .Where(s => s.IsImporter == false)
+                .ProjectTo<ExportLocalSuppliersDTO>(mapper.ConfigurationProvider)
+                .ToArray();
+
+            return xmlHelper.Serialize<ExportLocalSuppliersDTO[]>(suppliers, "suppliers");
+        }
+
+        public static string GetCarsWithTheirListOfParts(CarDealerContext context)
+        {
+            XmlHelper xmlHelper = new XmlHelper();
+            IMapper mapper = InitializeAutoMapper();
+
+            ExportCarWithListOfPartsDTO[] cars = context.Cars
+                .OrderByDescending(c => c.TraveledDistance)
+                .ThenBy(c => c.Model)
+                .ProjectTo<ExportCarWithListOfPartsDTO>(mapper.ConfigurationProvider)
+                .Take(5)
+                .ToArray();
+
+            return xmlHelper.Serialize<ExportCarWithListOfPartsDTO>(cars, "cars");
+        }
+
+        public static string GetTotalSalesByCustomer(CarDealerContext context)
+        {
+            XmlHelper xmlHelper = new XmlHelper();
+
+            IMapper mapper = InitializeAutoMapper();
+
+            ExportCustmerDTO[] customers = context.Customers
+                .AsNoTracking()
+                .Where(c => c.Sales.Any())
+                .ProjectTo<ExportCustmerDTO>(mapper.ConfigurationProvider)
+                .OrderByDescending(x => x.SpentMoney)
+                .ToArray();
+
+
+            return xmlHelper.Serialize<ExportCustmerDTO[]>(customers, "customers");
         }
     }
 }
