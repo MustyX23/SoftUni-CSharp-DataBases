@@ -10,9 +10,6 @@ namespace CarDealer.DTOs.Export
     [XmlType("car")]
     public class ExportCarDTO
     {
-        [XmlElement("name")]
-        public string Name { get; set; }
-
         [XmlElement("make")]
         public string Make { get; set; }
 
