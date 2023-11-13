@@ -41,7 +41,7 @@ namespace CarDealer
             this.CreateMap<Customer, ExportCustmerDTO>()
                 .ForMember(dest => dest.BoughtCars, mo => mo.MapFrom(s => s.Sales.Count))
                 .ForMember(dest => dest.SpentMoney,
-                mo => mo.MapFrom(s => s.Sales.SelectMany(x => x.Car.PartsCars).Sum(x => x.Part.Price)))
+                mo => mo.MapFrom(s => s.Sales.SelectMany(x => x.Car.PartsCars).Sum(x => x.Part.Price)));
 
         }
     }
