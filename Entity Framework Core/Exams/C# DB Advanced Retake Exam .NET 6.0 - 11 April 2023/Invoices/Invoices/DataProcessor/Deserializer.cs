@@ -1,7 +1,13 @@
 ﻿namespace Invoices.DataProcessor
 {
     using System.ComponentModel.DataAnnotations;
+    using System.IO;
+    using AutoMapper;
+    using Castle.Core.Internal;
     using Invoices.Data;
+    using Invoices.Data.Models;
+    using Invoices.DataProcessor.ImportDto;
+    using static System.Net.Mime.MediaTypeNames;
 
     public class Deserializer
     {
@@ -19,7 +25,47 @@
 
         public static string ImportClients(InvoicesContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            XmlHelper xmlHelper = new XmlHelper();
+
+            IMapper mapper = InitializeMapper();
+
+            var clients = new HashSet<Client>();
+            var clientsDTOS = xmlHelper.Deserialize<ImportClientDTO[]>(xmlString, "Clients");
+
+            var errorMessages = new List<string>();
+
+            foreach (var clientDTO in clientsDTOS)
+            {
+                if (string.IsNullOrEmpty(clientDTO.Name) || string.IsNullOrEmpty(clientDTO.NumberVat))
+                {
+                    errorMessages.Add("Invalid data!");
+                    continue;
+                }
+
+                Client client = mapper.Map<Client>(clientDTO);
+
+
+                foreach (var addressDTO in clientDTO.Addresses)
+                {
+                    if (string.IsNullOrEmpty(addressDTO.StreetName) ||
+                        addressDTO.StreetNumber <= 0 ||
+                        string.IsNullOrEmpty(addressDTO.PostCode) ||
+                        string.IsNullOrEmpty(addressDTO.City) ||
+                        string.IsNullOrEmpty(addressDTO.Country))
+                    {
+                        errorMessages.Add("Invalid data!");
+                        continue;
+                    }
+
+                    Address address = mapper.Map<Address>(addressDTO);
+
+                    client.Addresses.Add(address);
+                    
+                }
+
+                clients.Add(client);
+            }
+            return $"{string.Join(Environment.NewLine, errorMessages)}{Environment.NewLine}Successfully imported {clients.Count} clients.";
         }
 
 
@@ -41,6 +87,15 @@
             var validationResult = new List<ValidationResult>();
 
             return Validator.TryValidateObject(dto, validationContext, validationResult, true);
+        }
+
+        private static IMapper InitializeMapper()
+        {
+            return new Mapper(new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<InvoicesProfile>();
+            }));           
+            
         }
     } 
 }
