@@ -8,8 +8,12 @@ namespace Invoices
     {
         public InvoicesProfile()
         {
-            CreateMap<ImportClientDTO, Client>();
+            CreateMap<ImportClientDTO, Client>()
+                .ForMember(d => d.Addresses, opt => opt.Ignore());
             CreateMap<ImportClientAddressDTO, Address>();
+
+            CreateMap<ImportInvoiceDTO, Invoice>();
+
         }
     }
 }
