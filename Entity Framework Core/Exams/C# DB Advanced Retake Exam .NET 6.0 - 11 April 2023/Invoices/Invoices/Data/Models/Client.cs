@@ -16,10 +16,13 @@ namespace Invoices.Data.Models
         public int Id { get; set; }
 
         [MaxLength(25)]
+        [MinLength(10)]
         [Required]
         public string Name { get; set; }
 
         [Required]
+        [MinLength(5)]
+        [MaxLength(15)]
         public string NumberVat { get; set; }
 
         public virtual ICollection<Invoice> Invoices { get; set; }
