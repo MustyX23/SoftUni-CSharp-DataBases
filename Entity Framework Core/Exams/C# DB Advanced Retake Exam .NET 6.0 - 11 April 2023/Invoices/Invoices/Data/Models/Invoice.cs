@@ -11,9 +11,10 @@ namespace Invoices.Data.Models
 {
     public class Invoice
     {
+        [Key]
         public int Id { get; set; }
 
-        [Range(1000000000, 1500000000)]
+        [Required]
         public int Number { get; set; }
 
         [Required]
@@ -31,7 +32,7 @@ namespace Invoices.Data.Models
         [Required]
         public int ClientId { get; set; }
 
-        public virtual Client Client { get; set; }
+        public virtual Client Client { get; set; } = null!;
 
     }
 }
