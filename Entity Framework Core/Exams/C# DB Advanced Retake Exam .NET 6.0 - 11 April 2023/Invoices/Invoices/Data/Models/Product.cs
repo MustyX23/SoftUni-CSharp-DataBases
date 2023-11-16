@@ -22,7 +22,7 @@ namespace Invoices.Data.Models
 
         [Required]
         [MaxLength(30)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         [Column(TypeName = "decimal(18,4)")]
@@ -31,7 +31,7 @@ namespace Invoices.Data.Models
         [Required]
         public CategoryType CategoryType { get; set; }
 
-        public virtual ICollection<ProductClient> ProductsClients { get; set; }
+        public virtual ICollection<ProductClient> ProductsClients { get; set; } = null!;
 
     }
 }
