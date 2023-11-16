@@ -98,8 +98,16 @@
                     sb.AppendLine("Invalid data!");
                     continue;
                 }
+               
 
                 Invoice invoice = mapper.Map<Invoice>(invoiceDTO);
+
+                if (invoice.IssueDate > invoice.DueDate)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
                 invoices.Add(invoice);
                 sb.AppendLine(String.Format(SuccessfullyImportedInvoices, invoice.Number));
             }
@@ -112,9 +120,54 @@
 
         public static string ImportProducts(InvoicesContext context, string jsonString)
         {
+            IMapper mapper = InitializeMapper();
+            StringBuilder sb = new StringBuilder();
 
+            var productDTOs = JsonConvert.DeserializeObject<ImportProductDTO[]>(jsonString);
 
-            throw new NotImplementedException();
+            var products = new HashSet<Product>();
+
+            foreach (var productDTO in productDTOs)
+            {
+                if (!IsValid(productDTO))
+                {
+                    sb.AppendLine("Invalid data!");
+                    continue;
+                }
+
+                if (!productDTO.Clients.Any())
+                {
+                    sb.AppendLine("Invalid data!");
+                    continue;
+                }
+
+                Product product = mapper.Map<Product>(productDTO);
+
+                foreach (int clientId in productDTO.Clients.Distinct())
+                {
+                    Client client = context.Clients.FirstOrDefault(c => c.Id == clientId);
+                   
+
+                    if (client == null)
+                    {
+                        sb.AppendLine("Invalid data!");
+                        continue;
+                    }
+
+                    product.ProductsClients.Add(new ProductClient() 
+                    {
+                        Client = client
+                    });
+                }
+
+                products.Add(product);
+                sb.AppendLine(String.Format(SuccessfullyImportedProducts, product.Name, product.ProductsClients.Count));
+            }
+
+            context.Products.AddRange(products);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         private static IMapper InitializeMapper()
