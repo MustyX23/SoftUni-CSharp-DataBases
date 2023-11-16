@@ -18,18 +18,18 @@ namespace Invoices.Data.Models
         [MaxLength(25)]
         [MinLength(10)]
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
         [MinLength(5)]
         [MaxLength(15)]
-        public string NumberVat { get; set; }
+        public string NumberVat { get; set; } = null!;
 
-        public virtual ICollection<Invoice> Invoices { get; set; }
-        
-        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; } = null!;
 
-        public virtual ICollection<ProductClient> ProductsClients { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; } = null!;
+
+        public virtual ICollection<ProductClient> ProductsClients { get; set; } = null!;
 
     }
 }
