@@ -6,6 +6,7 @@
     using Invoices.Data.Models;
     using Invoices.DataProcessor.ExportDto;
     using Newtonsoft.Json;
+    using System.Globalization;
     using System.Linq;
 
     public class Serializer
@@ -14,13 +15,30 @@
         {
             XmlHelper xmlHelper = new XmlHelper();
 
-            IMapper mapper = InitializeMapper();
+            //IMapper mapper = InitializeMapper();
+            //
+            //ClientExportDto[] clients = context.Clients
+            //    .Where(c => c.Invoices.Any(i => i.IssueDate >= date))
+            //    .ProjectTo<ClientExportDto>(mapper.ConfigurationProvider)
+            //    .OrderByDescending(c => c.InvoicesCount)
+            //    .ThenBy(c => c.Name)
+            //    .ToArray();
 
             ClientExportDto[] clients = context.Clients
                 .Where(c => c.Invoices.Any(i => i.IssueDate >= date))
-                .ProjectTo<ClientExportDto>(mapper.ConfigurationProvider)
-                .OrderByDescending(c => c.InvoicesCount)
-                .ThenBy(c => c.Name)
+                .Select(c => new ClientExportDto()
+                {
+                    Name = c.Name,
+                    NumberVat = c.NumberVat,
+                    InvoicesCount = c.Invoices.Count,
+                    Invoices = c.Invoices.Select(i => new ClientInvoiceExportDto()
+                    {
+                        Number = i.Number,
+                        Amount = i.Amount,
+                        DueDate = DateTime.ParseExact(i.DueDate, "d", CultureInfo.InvariantCulture),
+                        Currency = Enum.Parsei.CurrencyType
+                     })
+                })
                 .ToArray();
 
             return xmlHelper.Serialize<ClientExportDto[]>(clients, "Clients");
