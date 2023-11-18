@@ -4,6 +4,7 @@
     using System.Text;
     using AutoMapper;
     using Data;
+    using Newtonsoft.Json;
     using Trucks.Data.Models;
     using Trucks.DataProcessor.ImportDto;
 
@@ -66,7 +67,58 @@
         }
         public static string ImportClient(TrucksContext context, string jsonString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+
+            IMapper mapper = InitializeMapper();
+            ImportClientDto[] clientDtos = JsonConvert.DeserializeObject<ImportClientDto[]>(jsonString);
+
+            HashSet<Client> validCliens = new HashSet<Client>();
+
+            var validTruckIds = context.Trucks.Select(t => t.Id).ToArray();
+
+            foreach (var clientDto in clientDtos)
+            {
+                if (!IsValid(clientDto))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                if (clientDto.Type == "usual")
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                Client client = new Client() 
+                {
+                    Name = clientDto.Name,
+                    Nationality = clientDto.Nationality,
+                    Type = clientDto.Type
+                };
+
+                foreach (var truckId in clientDto.Trucks.Distinct())
+                {
+                    if (!validTruckIds.Contains(truckId))
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+
+                    ClientTruck clientTruck = new ClientTruck() 
+                    {
+                        Client = client,
+                        TruckId = truckId
+                    };
+
+                    client.ClientsTrucks.Add(clientTruck);
+                }
+                validCliens.Add(client);
+                sb.AppendLine(String.Format(SuccessfullyImportedClient, client.Name, client.ClientsTrucks.Count()));
+            }
+            context.Clients.AddRange(validCliens);
+            context.SaveChanges();
+            return sb.ToString().TrimEnd();
         }
 
         private static bool IsValid(object dto)
