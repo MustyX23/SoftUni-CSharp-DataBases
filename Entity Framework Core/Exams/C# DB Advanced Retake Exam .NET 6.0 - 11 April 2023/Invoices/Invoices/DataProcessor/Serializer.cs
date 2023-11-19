@@ -26,6 +26,7 @@
 
             ClientExportDto[] clients = context.Clients
                 .Where(c => c.Invoices.Any(i => i.IssueDate >= date))
+                .ToArray()
                 .Select(c => new ClientExportDto()
                 {
                     Name = c.Name,
@@ -35,10 +36,16 @@
                     {
                         Number = i.Number,
                         Amount = i.Amount,
-                        DueDate = DateTime.ParseExact(i.DueDate, "d", CultureInfo.InvariantCulture),
-                        Currency = Enum.Parsei.CurrencyType
+                        DueDate = i.DueDate.ToString("d", CultureInfo.InvariantCulture),
+                        Currency = i.CurrencyType.ToString(),
+                        IssueDate = i.IssueDate                       
                      })
+                    .OrderBy(i => i.IssueDate)
+                    .ThenByDescending(i => i.DueDate)
+                    .ToArray()
                 })
+                .OrderByDescending(c => c.InvoicesCount)
+                .ThenBy(c => c.Name)
                 .ToArray();
 
             return xmlHelper.Serialize<ClientExportDto[]>(clients, "Clients");

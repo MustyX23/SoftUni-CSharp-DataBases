@@ -5,15 +5,15 @@
     <VatNumber>SK2023911087</VatNumber>
     <Invoices>
       <Invoice>
-        <InvoiceNumber>1063259096</InvoiceNumber>
-        <InvoiceAmount>167.22</InvoiceAmount>
-        <DueDate>02/19/2023</DueDate>
-        <Currency>BGN</Currency>
-      </Invoice>
-      <Invoice>
         <InvoiceNumber>1427940691</InvoiceNumber>
         <InvoiceAmount>913.13</InvoiceAmount>
         <DueDate>10/28/2022</DueDate>
+        <Currency>BGN</Currency>
+      </Invoice>
+      <Invoice>
+        <InvoiceNumber>1063259096</InvoiceNumber>
+        <InvoiceAmount>167.22</InvoiceAmount>
+        <DueDate>02/19/2023</DueDate>
         <Currency>BGN</Currency>
       </Invoice>
       <Invoice>
@@ -42,7 +42,7 @@
       </Invoice>
       <Invoice>
         <InvoiceNumber>1257958993</InvoiceNumber>
-        <InvoiceAmount>235.80</InvoiceAmount>
+        <InvoiceAmount>235.8</InvoiceAmount>
         <DueDate>12/18/2022</DueDate>
         <Currency>EUR</Currency>
       </Invoice>
@@ -96,13 +96,13 @@
     <Invoices>
       <Invoice>
         <InvoiceNumber>1108430716</InvoiceNumber>
-        <InvoiceAmount>252.30</InvoiceAmount>
+        <InvoiceAmount>252.3</InvoiceAmount>
         <DueDate>12/14/2022</DueDate>
         <Currency>BGN</Currency>
       </Invoice>
       <Invoice>
         <InvoiceNumber>1215683128</InvoiceNumber>
-        <InvoiceAmount>7.00</InvoiceAmount>
+        <InvoiceAmount>7</InvoiceAmount>
         <DueDate>04/06/2023</DueDate>
         <Currency>EUR</Currency>
       </Invoice>
@@ -144,7 +144,7 @@
       </Invoice>
       <Invoice>
         <InvoiceNumber>1408771891</InvoiceNumber>
-        <InvoiceAmount>17.60</InvoiceAmount>
+        <InvoiceAmount>17.6</InvoiceAmount>
         <DueDate>04/29/2023</DueDate>
         <Currency>BGN</Currency>
       </Invoice>
@@ -186,7 +186,7 @@
       </Invoice>
       <Invoice>
         <InvoiceNumber>1078925467</InvoiceNumber>
-        <InvoiceAmount>254.00</InvoiceAmount>
+        <InvoiceAmount>254</InvoiceAmount>
         <DueDate>03/01/2023</DueDate>
         <Currency>BGN</Currency>
       </Invoice>
@@ -210,7 +210,7 @@
       </Invoice>
       <Invoice>
         <InvoiceNumber>1300941213</InvoiceNumber>
-        <InvoiceAmount>252.30</InvoiceAmount>
+        <InvoiceAmount>252.3</InvoiceAmount>
         <DueDate>03/14/2023</DueDate>
         <Currency>BGN</Currency>
       </Invoice>
@@ -234,7 +234,7 @@
       </Invoice>
       <Invoice>
         <InvoiceNumber>1272358980</InvoiceNumber>
-        <InvoiceAmount>98.80</InvoiceAmount>
+        <InvoiceAmount>98.8</InvoiceAmount>
         <DueDate>02/23/2023</DueDate>
         <Currency>BGN</Currency>
       </Invoice>
@@ -264,7 +264,7 @@
     <Invoices>
       <Invoice>
         <InvoiceNumber>1458253589</InvoiceNumber>
-        <InvoiceAmount>235.80</InvoiceAmount>
+        <InvoiceAmount>235.8</InvoiceAmount>
         <DueDate>03/16/2023</DueDate>
         <Currency>BGN</Currency>
       </Invoice>
@@ -300,7 +300,7 @@
     <Invoices>
       <Invoice>
         <InvoiceNumber>1315215484</InvoiceNumber>
-        <InvoiceAmount>420.60</InvoiceAmount>
+        <InvoiceAmount>420.6</InvoiceAmount>
         <DueDate>12/02/2022</DueDate>
         <Currency>BGN</Currency>
       </Invoice>

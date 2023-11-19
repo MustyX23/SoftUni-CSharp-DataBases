@@ -21,7 +21,7 @@ namespace Invoices.Data.Models
         public DateTime IssueDate { get; set; }
 
         [Required]
-        public string? DueDate { get; set; }
+        public DateTime DueDate { get; set; }
         [Required]
         public decimal Amount { get; set; }
 

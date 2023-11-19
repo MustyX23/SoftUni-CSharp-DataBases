@@ -25,11 +25,11 @@ namespace Invoices
                                         .OrderBy(i => i.IssueDate)
                                         .ThenByDescending(i => i.DueDate)));
 
-            CreateMap<Invoice, ClientInvoiceExportDto>()
-                .ForMember(dest => dest.DueDate, opt =>
-                    opt.MapFrom(s => s.DueDate.ToString("d", CultureInfo.InvariantCulture)))
-                .ForMember(dest => dest.Currency, opt => 
-                opt.MapFrom(s => s.CurrencyType.ToString()));
+           //CreateMap<Invoice, ClientInvoiceExportDto>()
+           //    .ForMember(dest => dest.DueDate, opt =>
+           //        opt.MapFrom(s => s.DueDate.ToString("d", CultureInfo.InvariantCulture)))
+           //    .ForMember(dest => dest.Currency, opt => 
+           //    opt.MapFrom(s => s.CurrencyType.ToString()));
 
         }
     }

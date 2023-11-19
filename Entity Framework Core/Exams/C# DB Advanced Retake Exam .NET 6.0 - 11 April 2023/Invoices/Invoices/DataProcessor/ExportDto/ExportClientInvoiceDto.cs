@@ -14,9 +14,12 @@ namespace Invoices.DataProcessor.ExportDto
         public decimal Amount { get; set; }
 
         [XmlElement("DueDate")]
-        public DateTime DueDate { get; set; }
+        public string? DueDate { get; set; }
 
         [Required]
         public string Currency { get; set; } = null!;
+
+        [XmlIgnore]
+        public DateTime IssueDate { get; set; }
     }
 }
