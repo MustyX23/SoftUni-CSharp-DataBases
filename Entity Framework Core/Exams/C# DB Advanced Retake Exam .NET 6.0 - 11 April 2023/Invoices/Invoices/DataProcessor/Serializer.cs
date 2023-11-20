@@ -32,14 +32,18 @@
                     Name = c.Name,
                     NumberVat = c.NumberVat,
                     InvoicesCount = c.Invoices.Count,
-                    Invoices = c.Invoices.Select(i => new ClientInvoiceExportDto()
+                    Invoices = c.Invoices
+                    .OrderBy(i => i.IssueDate)
+                    .ThenByDescending(i => i.DueDate)
+                    .ToArray()
+                    .Select(i => new ClientInvoiceExportDto()
                     {
                         Number = i.Number,
                         Amount = i.Amount,
                         DueDate = i.DueDate.ToString("d", CultureInfo.InvariantCulture),
                         Currency = i.CurrencyType.ToString(),
                         IssueDate = i.IssueDate                       
-                     })                    
+                     })                  
                     .ToArray()
                 })
                 .OrderByDescending(c => c.InvoicesCount)
