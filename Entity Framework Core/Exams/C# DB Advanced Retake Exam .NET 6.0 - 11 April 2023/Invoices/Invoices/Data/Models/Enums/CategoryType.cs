@@ -8,10 +8,10 @@ namespace Invoices.Data.Models.Enums
 {
     public enum CategoryType
     {
-        ADR = 10,
-        Filters = 20,
-        Lights = 30,
-        Others = 40, 
-        Tyres = 50
+        ADR = 0,
+        Filters = 1,
+        Lights = 2,
+        Others = 3, 
+        Tyres = 4
     }
 }
