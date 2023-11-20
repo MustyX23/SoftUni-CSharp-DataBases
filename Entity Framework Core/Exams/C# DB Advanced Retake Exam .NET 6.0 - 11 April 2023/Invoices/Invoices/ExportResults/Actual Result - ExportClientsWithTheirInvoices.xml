@@ -5,15 +5,15 @@
     <VatNumber>SK2023911087</VatNumber>
     <Invoices>
       <Invoice>
-        <InvoiceNumber>1427940691</InvoiceNumber>
-        <InvoiceAmount>913.13</InvoiceAmount>
-        <DueDate>10/28/2022</DueDate>
-        <Currency>EUR</Currency>
-      </Invoice>
-      <Invoice>
         <InvoiceNumber>1063259096</InvoiceNumber>
         <InvoiceAmount>167.22</InvoiceAmount>
         <DueDate>02/19/2023</DueDate>
+        <Currency>EUR</Currency>
+      </Invoice>
+      <Invoice>
+        <InvoiceNumber>1427940691</InvoiceNumber>
+        <InvoiceAmount>913.13</InvoiceAmount>
+        <DueDate>10/28/2022</DueDate>
         <Currency>EUR</Currency>
       </Invoice>
       <Invoice>
