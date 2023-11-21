@@ -1,47 +1,8 @@
 [
   {
-    "Name": "MAHLE KC 522D",
-    "Price": 108.3000,
-    "Category": "4",
-    "Clients": [
-      {
-        "Name": "DPS EUROPE AB",
-        "NumberVat": "SE556488676901"
-      },
-      {
-        "Name": "FREIGHTS PC",
-        "NumberVat": "EL801106064"
-      },
-      {
-        "Name": "LOPERBEN SL",
-        "NumberVat": "ESB24242765"
-      },
-      {
-        "Name": "SARL FLEXATRANS",
-        "NumberVat": "FR28503105314"
-      },
-      {
-        "Name": "SARL SOVI 34",
-        "NumberVat": "FR63432629426"
-      },
-      {
-        "Name": "SPEDOX,SRO",
-        "NumberVat": "SK2023911087"
-      },
-      {
-        "Name": "TEAM SERVICE CAR SRL",
-        "NumberVat": "IT00931980965"
-      },
-      {
-        "Name": "TG TRUCKS GMBH",
-        "NumberVat": "DE254185437"
-      }
-    ]
-  },
-  {
     "Name": "MAHLE KX400KIT",
-    "Price": 26.1300,
-    "Category": "4",
+    "Price": 26.13,
+    "Category": "Tyres",
     "Clients": [
       {
         "Name": "BTS GMBH CO KG",
@@ -78,9 +39,44 @@
     ]
   },
   {
+    "Name": "MAHLE KC 522D",
+    "Price": 108.30,
+    "Category": "Tyres",
+    "Clients": [
+      {
+        "Name": "DPS EUROPE AB",
+        "NumberVat": "SE556488676901"
+      },
+      {
+        "Name": "FREIGHTS PC",
+        "NumberVat": "EL801106064"
+      },
+      {
+        "Name": "LOPERBEN SL",
+        "NumberVat": "ESB24242765"
+      },
+      {
+        "Name": "SARL FLEXATRANS",
+        "NumberVat": "FR28503105314"
+      },
+      {
+        "Name": "SARL SOVI 34",
+        "NumberVat": "FR63432629426"
+      },
+      {
+        "Name": "TEAM SERVICE CAR SRL",
+        "NumberVat": "IT00931980965"
+      },
+      {
+        "Name": "TG TRUCKS GMBH",
+        "NumberVat": "DE254185437"
+      }
+    ]
+  },
+  {
     "Name": "HENGST E82",
-    "Price": 271.5100,
-    "Category": "4",
+    "Price": 271.51,
+    "Category": "Tyres",
     "Clients": [
       {
         "Name": "BTS GMBH CO KG",
@@ -110,8 +106,8 @@
   },
   {
     "Name": "MAHLE OX434D",
-    "Price": 91.3700,
-    "Category": "4",
+    "Price": 91.37,
+    "Category": "Tyres",
     "Clients": [
       {
         "Name": "JUAN Y ENRIQUE SANCHEZ GA",
@@ -140,198 +136,29 @@
     ]
   },
   {
-    "Name": "DAF Lightbulb U58/9KIT",
-    "Price": 53.6600,
-    "Category": "3",
+    "Name": "Break pads for trailer",
+    "Price": 89.60,
+    "Category": "Tyres",
     "Clients": [
       {
-        "Name": "DPS EUROPE AB",
-        "NumberVat": "SE556488676901"
+        "Name": "BTS GMBH CO KG",
+        "NumberVat": "DE814592224"
       },
       {
-        "Name": "LOPERBEN SL",
-        "NumberVat": "ESB24242765"
+        "Name": "KAMEEN LOGISTIC KG",
+        "NumberVat": "ATU75339778"
       },
       {
-        "Name": "SARL SOVI 34",
-        "NumberVat": "FR63432629426"
+        "Name": "SARL FLEXATRANS",
+        "NumberVat": "FR28503105314"
       },
       {
-        "Name": "TRANS CARGO",
-        "NumberVat": "EL099517837"
-      }
-    ]
-  },
-  {
-    "Name": "MAN Filter CU3855",
-    "Price": 31.6700,
-    "Category": "2",
-    "Clients": [
-      {
-        "Name": "B H TRANSPORT LOGISTIK",
-        "NumberVat": "ATU53998900"
+        "Name": "TALLERES MAVIMA SL",
+        "NumberVat": "ESB26163097"
       },
       {
-        "Name": "FAHRZEUGBEDARF KOTZ CO",
-        "NumberVat": "ATU19169904"
-      },
-      {
-        "Name": "LOPERBEN SL",
-        "NumberVat": "ESB24242765"
-      },
-      {
-        "Name": "TEAM SERVICE CAR SRL",
-        "NumberVat": "IT00931980965"
-      }
-    ]
-  },
-  {
-    "Name": "ADR Kit H601/4",
-    "Price": 6.0500,
-    "Category": "1",
-    "Clients": [
-      {
-        "Name": "ALPENTRANS SPEDITION UND",
-        "NumberVat": "ATU33814209"
-      },
-      {
-        "Name": "SARL HEBERGECO",
-        "NumberVat": "FR75532664075"
-      },
-      {
-        "Name": "TRANS CARGO",
-        "NumberVat": "EL099517837"
-      }
-    ]
-  },
-  {
-    "Name": "Lightbulb HELLA, H7",
-    "Price": 36.2800,
-    "Category": "3",
-    "Clients": [
-      {
-        "Name": "ALPENTRANS SPEDITION UND",
-        "NumberVat": "ATU33814209"
-      },
-      {
-        "Name": "BECCARO ALFEO EREDI SNC",
-        "NumberVat": "IT00062510938"
-      },
-      {
-        "Name": "TRANS CARGO",
-        "NumberVat": "EL099517837"
-      }
-    ]
-  },
-  {
-    "Name": "Tyre OS c10w 12",
-    "Price": 9.1300,
-    "Category": "4",
-    "Clients": [
-      {
-        "Name": "FREIGHTS PC",
-        "NumberVat": "EL801106064"
-      },
-      {
-        "Name": "JOSEF PAUL GMBH COKG",
-        "NumberVat": "DE131605560"
-      },
-      {
-        "Name": "SARL SOVI 34",
-        "NumberVat": "FR63432629426"
-      }
-    ]
-  },
-  {
-    "Name": "ADR Kit WK1080/7X",
-    "Price": 375.0000,
-    "Category": "1",
-    "Clients": [
-      {
-        "Name": "FAHRZEUGBEDARF KOTZ CO",
-        "NumberVat": "ATU19169904"
-      },
-      {
-        "Name": "LOPERBEN SL",
-        "NumberVat": "ESB24242765"
-      }
-    ]
-  },
-  {
-    "Name": "Lightbulb HELLA, H3",
-    "Price": 123.0000,
-    "Category": "3",
-    "Clients": [
-      {
-        "Name": "LE RELAIS DES PRIMEURS",
-        "NumberVat": "FR64431553163"
-      },
-      {
-        "Name": "LOPERBEN SL",
-        "NumberVat": "ESB24242765"
-      }
-    ]
-  },
-  {
-    "Name": "MAN-Lightbulb HU1210",
-    "Price": 28.7100,
-    "Category": "3",
-    "Clients": [
-      {
-        "Name": "TECNO TRUCK FLLI BEQIRI",
-        "NumberVat": "IT01825150335"
-      },
-      {
-        "Name": "TRANS CARGO",
-        "NumberVat": "EL099517837"
-      }
-    ]
-  },
-  {
-    "Name": "Tyre BOR5W 24V BA15S BA5S",
-    "Price": 17.3100,
-    "Category": "4",
-    "Clients": [
-      {
-        "Name": "FREIGHTS PC",
-        "NumberVat": "EL801106064"
-      },
-      {
-        "Name": "SAS TURBOTRUCKS REIMS",
-        "NumberVat": "FR23752934406"
-      }
-    ]
-  },
-  {
-    "Name": "ADR Kit HU12006Z",
-    "Price": 27.5000,
-    "Category": "1",
-    "Clients": [
-      {
-        "Name": "FREIGHTS PC",
-        "NumberVat": "EL801106064"
-      }
-    ]
-  },
-  {
-    "Name": "DAF FILTER PU999/1X",
-    "Price": 22.8900,
-    "Category": "2",
-    "Clients": [
-      {
-        "Name": "TRANS CARGO",
-        "NumberVat": "EL099517837"
-      }
-    ]
-  },
-  {
-    "Name": "Fender for trailer",
-    "Price": 40.0000,
-    "Category": "4",
-    "Clients": [
-      {
-        "Name": "TRANS CARGO",
-        "NumberVat": "EL099517837"
+        "Name": "TG TRUCKS GMBH",
+        "NumberVat": "DE254185437"
       }
     ]
   }

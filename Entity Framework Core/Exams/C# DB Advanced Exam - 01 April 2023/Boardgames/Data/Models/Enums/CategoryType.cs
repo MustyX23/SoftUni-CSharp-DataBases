@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Invoices.Data.Models.Enums
+namespace Boardgames.Data.Models.Enums
 {
-    public enum CurrencyType
+    public enum CategoryType
     {
-        BGN = 0, 
-        EUR = 1,
-        USD = 2
+        Abstract, Children, Family, Party, Strategy
     }
 }

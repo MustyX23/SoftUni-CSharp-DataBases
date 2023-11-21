@@ -25,23 +25,25 @@
             //    .ToArray();
 
             ClientExportDto[] clients = context.Clients
-                .Where(c => c.Invoices.Any(i => i.IssueDate >= date))
+                .Where(c => c.Invoices.Any(i => i.IssueDate > date))
                 .ToArray()
                 .Select(c => new ClientExportDto()
                 {
                     Name = c.Name,
                     NumberVat = c.NumberVat,
                     InvoicesCount = c.Invoices.Count,
-                    Invoices = c.Invoices.Select(i => new ClientInvoiceExportDto()
+                    Invoices = c.Invoices
+                    .OrderBy(i => i.IssueDate)
+                    .ThenByDescending(i => i.DueDate)
+                    .ToArray()
+                    .Select(i => new ClientInvoiceExportDto()
                     {
                         Number = i.Number,
                         Amount = i.Amount,
                         DueDate = i.DueDate.ToString("d", CultureInfo.InvariantCulture),
                         Currency = i.CurrencyType.ToString(),
                         IssueDate = i.IssueDate                       
-                     })
-                    .OrderBy(i => i.IssueDate)
-                    .ThenByDescending(i => i.DueDate)
+                     })                  
                     .ToArray()
                 })
                 .OrderByDescending(c => c.InvoicesCount)
@@ -54,13 +56,15 @@
         public static string ExportProductsWithMostClients(InvoicesContext context, int nameLength)
         {
             var products = context.Products
-                .Where(p => p.ProductsClients.Any(pc => pc.Client.Name.Length == nameLength))
+                .Where(p => p.ProductsClients.Any(pc => pc.Client.Name.Length >= nameLength))
                 .Select(p => new
                 {
                     Name = p.Name,
-                    Price = p.Price,
+                    Price = Decimal.Parse($"{p.Price:f2}"),
                     Category = p.CategoryType.ToString(),
-                    Clients = p.ProductsClients.Select(pc => new
+                    Clients = p.ProductsClients
+                    .Where(p => p.Client.Name.Length >= nameLength)
+                    .Select(pc => new
                     {
                         Name = pc.Client.Name,
                         NumberVat = pc.Client.NumberVat
@@ -70,6 +74,7 @@
                 })
                 .OrderByDescending(p => p.Clients.Count())
                 .ThenBy(p => p.Name)
+                .Take(5)
                 .ToArray();
 
             return JsonConvert.SerializeObject(products, Formatting.Indented);
