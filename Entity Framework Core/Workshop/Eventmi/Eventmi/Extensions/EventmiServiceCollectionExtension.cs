@@ -1,4 +1,6 @@
-﻿using Eventmi.Infrastructure.Data;
+﻿using Eventmi.Core.Contracts;
+using Eventmi.Core.Services;
+using Eventmi.Infrastructure.Data;
 using Eventmi.Infrastructure.Data.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-
+            services.AddScoped<IEventService, EventService>();
             return services;
         }
 

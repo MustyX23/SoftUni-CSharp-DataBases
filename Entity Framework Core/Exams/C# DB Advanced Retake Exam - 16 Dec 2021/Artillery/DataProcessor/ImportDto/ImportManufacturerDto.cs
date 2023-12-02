@@ -4,28 +4,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
-namespace Artillery.Data.Models
+namespace Artillery.DataProcessor.ImportDto
 {
-    public class Manufacturer
+    [XmlType("Manufacturer")]
+    public class ImportManufacturerDto
     {
-        public Manufacturer()
-        {
-            Guns = new HashSet<Gun>();
-        }
-
-        public int Id { get; set; }
-
+        [XmlElement("ManufacturerName")]
         [Required]
         [MinLength(4)]
         [MaxLength(40)]
         public string ManufacturerName { get; set; } = null!;
 
+        [XmlElement("Founded")]
         [Required]
         [MinLength(10)]
         [MaxLength(100)]
         public string Founded { get; set; } = null!;
-
-        public virtual ICollection<Gun> Guns { get; set; } = null!;
     }
 }

@@ -52,5 +52,9 @@ namespace Eventmi.Infrastructure.Data.Common
             return await context.SaveChangesAsync();
         }
 
+        public async Task<T?> GetById<T>(int id) where T : class
+        {
+            return await DbSet<T>().FindAsync(id);
+        }
     }
 }

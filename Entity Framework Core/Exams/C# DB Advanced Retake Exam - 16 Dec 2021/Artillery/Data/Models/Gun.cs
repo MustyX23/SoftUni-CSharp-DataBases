@@ -25,7 +25,7 @@ namespace Artillery.Data.Models
         [Required]
         [Range(2.00, 35.00)]
         public double BarrelLength { get; set; }
-        public int NumberBuild { get; set; }
+        public int? NumberBuild { get; set; }
 
         [Required]
         [Range(1, 100000)]
@@ -37,7 +37,7 @@ namespace Artillery.Data.Models
         [Required]
         [ForeignKey(nameof(Shell))]
         public int ShellId { get; set; }
-        public Shell Shell { get; set; } = null!;
-        public ICollection<CountryGun> CountriesGuns { get; set; } = null!;
+        public virtual Shell Shell { get; set; } = null!;
+        public virtual ICollection<CountryGun> CountriesGuns { get; set; } = null!;
     }
 }

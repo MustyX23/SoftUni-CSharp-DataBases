@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Eventmi.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,14 @@ namespace Eventmi.Core.Contracts
 {
     public interface IEventService
     {
-        Task CreateAsync();
+        Task CreateAsync(EventModel model);
+
+        Task DeleteAsync(int id);
+
+        Task EditAsync(EventModel model);
+
+        Task<EventModel> GetByIdAsync(int id);
+
+        Task<IEnumerable<EventModel>> GetAllAsync();
     }
 }

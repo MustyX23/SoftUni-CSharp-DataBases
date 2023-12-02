@@ -9,7 +9,9 @@ namespace Eventmi.Infrastructure.Data.Common
 {
     public interface IRepository
     {
-        Task AddAsync<T>(T entity) where T : class;        
+        Task AddAsync<T>(T entity) where T : class;
+        
+        Task<T> GetById<T>(int id) where T : class;
 
         IQueryable<T> All<T>() where T : class;
 

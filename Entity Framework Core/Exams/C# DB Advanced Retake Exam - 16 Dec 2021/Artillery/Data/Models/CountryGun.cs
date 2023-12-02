@@ -9,11 +9,11 @@ namespace Artillery.Data.Models
         [ForeignKey(nameof(Country))]
         public int CountryId { get; set; }
 
-        public Country Country { get; set; } = null!;
+        public virtual Country Country { get; set; } = null!;
 
         [Required]
         [ForeignKey(nameof(Gun))]
         public int GunId { get; set; }        
-        public Gun Gun { get; set; } = null!;
+        public virtual Gun Gun { get; set; } = null!;
     }
 }
