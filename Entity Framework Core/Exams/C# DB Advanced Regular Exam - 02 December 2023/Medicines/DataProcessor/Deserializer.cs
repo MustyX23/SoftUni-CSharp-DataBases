@@ -43,6 +43,11 @@
 
                 foreach (var medicineId in patientDto.Medicines) //Distinct
                 {
+                    //if (!validMedicineIds.Contains(medicineId))
+                    //{
+                    //    sb.AppendLine(ErrorMessage);
+                    //    continue;
+                    //}
                     if (patient.PatientsMedicines.Any(p => p.MedicineId == medicineId))
                     {
                         sb.AppendLine(ErrorMessage);
